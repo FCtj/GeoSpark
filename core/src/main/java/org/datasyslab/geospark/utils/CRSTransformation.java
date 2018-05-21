@@ -48,16 +48,21 @@ public class CRSTransformation
     /**
      * Transform.
      *
-     * @param sourceEpsgCRSCode the source epsg CRS code
-     * @param targetEpsgCRSCode the target epsg CRS code
+     * @param sourceRawCRS the source epsg CRS code or Well Known Text
+     * @param targetRawCRS the target epsg CRS code or Well Known Text
      * @param sourceObject the source object
      * @return the point
      */
-    public static Point Transform(String sourceEpsgCRSCode, String targetEpsgCRSCode, Point sourceObject)
+    public static Point Transform(String sourceRawCRS, String targetRawCRS, Point sourceObject)
     {
         try {
-            CoordinateReferenceSystem sourceCRS = CRS.decode(sourceEpsgCRSCode);
-            CoordinateReferenceSystem targetCRS = CRS.decode(targetEpsgCRSCode);
+            if (isNumeric(sourceRawCRS)){
+                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
+            } else {
+                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
+            }
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (Point) JTS.transform(sourceObject, transform);
         }
@@ -81,16 +86,21 @@ public class CRSTransformation
     /**
      * Transform.
      *
-     * @param sourceEpsgCRSCode the source epsg CRS code
-     * @param targetEpsgCRSCode the target epsg CRS code
+     * @param sourceRawCRS the source epsg CRS code or Well Known Text
+     * @param targetRawCRS the target epsg CRS code or Well Known Text
      * @param sourceObject the source object
      * @return the polygon
      */
-    public static Polygon Transform(String sourceEpsgCRSCode, String targetEpsgCRSCode, Polygon sourceObject)
+    public static Polygon Transform(String sourceRawCRS, String targetRawCRS, Polygon sourceObject)
     {
         try {
-            CoordinateReferenceSystem sourceCRS = CRS.decode(sourceEpsgCRSCode);
-            CoordinateReferenceSystem targetCRS = CRS.decode(targetEpsgCRSCode);
+            if (isNumeric(sourceRawCRS)){
+                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
+            } else {
+                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
+            }
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (Polygon) JTS.transform(sourceObject, transform);
         }
@@ -114,16 +124,22 @@ public class CRSTransformation
     /**
      * Transform.
      *
-     * @param sourceEpsgCRSCode the source epsg CRS code
-     * @param targetEpsgCRSCode the target epsg CRS code
+     * @param sourceRawCRS the source epsg CRS code or Well Known Text
+     * @param targetRawCRS the target epsg CRS code or Well Known Text
      * @param sourceObject the source object
      * @return the envelope
      */
-    public static Envelope Transform(String sourceEpsgCRSCode, String targetEpsgCRSCode, Envelope sourceObject)
+    public static Envelope Transform(String sourceRawCRS, String targetRawCRS, Envelope sourceObject)
     {
         try {
-            CoordinateReferenceSystem sourceCRS = CRS.decode(sourceEpsgCRSCode);
-            CoordinateReferenceSystem targetCRS = CRS.decode(targetEpsgCRSCode);
+            if (isNumeric(sourceRawCRS)){
+                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
+            } else {
+                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
+            }
+            
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return JTS.transform(sourceObject, transform);
         }
@@ -144,11 +160,17 @@ public class CRSTransformation
         }
     }
 
-    public static <T extends Geometry> T Transform(String sourceEpsgCRSCode, String targetEpsgCRSCode, T sourceObject)
+    public static <T extends Geometry> T Transform(String sourceRawCRS, String targetRawCRS, String WKT,  T sourceObject)
     {
         try {
-            CoordinateReferenceSystem sourceCRS = CRS.decode(sourceEpsgCRSCode);
-            CoordinateReferenceSystem targetCRS = CRS.decode(targetEpsgCRSCode);
+            if (isNumeric(sourceRawCRS)){
+                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
+            } else {
+                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
+            }
+            
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (T) JTS.transform(sourceObject, transform);
         }
