@@ -56,13 +56,8 @@ public class CRSTransformation
     public static Point Transform(String sourceRawCRS, String targetRawCRS, Point sourceObject)
     {
         try {
-            if (isNumeric(sourceRawCRS)){
-                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
-            } else {
-                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
-            }
+            CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+            CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (Point) JTS.transform(sourceObject, transform);
         }
@@ -94,13 +89,8 @@ public class CRSTransformation
     public static Polygon Transform(String sourceRawCRS, String targetRawCRS, Polygon sourceObject)
     {
         try {
-            if (isNumeric(sourceRawCRS)){
-                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
-            } else {
-                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
-            }
+            CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+            CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (Polygon) JTS.transform(sourceObject, transform);
         }
@@ -132,14 +122,8 @@ public class CRSTransformation
     public static Envelope Transform(String sourceRawCRS, String targetRawCRS, Envelope sourceObject)
     {
         try {
-            if (isNumeric(sourceRawCRS)){
-                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
-            } else {
-                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
-            }
-            
+            CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+            CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return JTS.transform(sourceObject, transform);
         }
@@ -163,14 +147,8 @@ public class CRSTransformation
     public static <T extends Geometry> T Transform(String sourceRawCRS, String targetRawCRS, T sourceObject)
     {
         try {
-            if (isNumeric(sourceRawCRS)){
-                CoordinateReferenceSystem sourceCRS = CRS.decode(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.decode(targetRawCRS);
-            } else {
-                CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
-                CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
-            }
-            
+            CoordinateReferenceSystem sourceCRS = CRS.parseWKT(sourceRawCRS);
+            CoordinateReferenceSystem targetCRS = CRS.parseWKT(targetRawCRS);
             final MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS, false);
             return (T) JTS.transform(sourceObject, transform);
         }
@@ -189,5 +167,16 @@ public class CRSTransformation
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public static boolean isNumeric(String str)  
+    {  
+        try {  
+            double d = Double.parseDouble(str);  
+        }  
+        catch(NumberFormatException nfe) {  
+            return false;  
+        }  
+        return true;  
     }
 }
