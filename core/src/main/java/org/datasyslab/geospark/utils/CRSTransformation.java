@@ -160,7 +160,7 @@ public class CRSTransformation
         }
     }
 
-    public static <T extends Geometry> T Transform(String sourceRawCRS, String targetRawCRS, String WKT,  T sourceObject)
+    public static <T extends Geometry> T Transform(String sourceRawCRS, String targetRawCRS, T sourceObject)
     {
         try {
             if (isNumeric(sourceRawCRS)){
